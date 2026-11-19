@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, type MouseEventHandler } from 'react';
 
 // ============================================================================
 // SELF-CONTAINED INLINE SVG ICONS (ปลอดจากปัญหา external icon dependency)
@@ -221,13 +223,18 @@ const createFallbackFoodDataUri = (label = 'เมนูอร่อย') => {
 };
 
 // คอมโพเนนต์รูปภาพพร้อม fallback อัตโนมัติและไม่ให้เกิด error บนหน้าเว็บ
-const SafeImage = ({ src, alt, className = '', onClick, fallbackLabel = 'ร้านเด็ดเลย' }) => {
-  const fallbackSrc = createFallbackFoodDataUri(fallbackLabel);
-  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+type SafeImageProps = {
+  src?: string;
+  alt: string;
+  className?: string;
+  onClick?: MouseEventHandler<HTMLImageElement>;
+  fallbackLabel?: string;
+};
 
-  useEffect(() => {
-    setImgSrc(src || fallbackSrc);
-  }, [src, fallbackSrc]);
+const SafeImage = ({ src, alt, className = '', onClick, fallbackLabel = 'ร้านเด็ดเลย' }: SafeImageProps) => {
+  const fallbackSrc = createFallbackFoodDataUri(fallbackLabel);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const imgSrc = failedSrc === src ? fallbackSrc : src || fallbackSrc;
 
   return (
     <img
@@ -235,8 +242,8 @@ const SafeImage = ({ src, alt, className = '', onClick, fallbackLabel = 'ร้�
       alt={alt}
       onClick={onClick}
       onError={() => {
-        if (imgSrc !== fallbackSrc) {
-          setImgSrc(fallbackSrc);
+        if (src && imgSrc !== fallbackSrc) {
+          setFailedSrc(src);
         }
       }}
       className={className}
@@ -257,7 +264,6 @@ const RESTAURANTS_DATA = [
     waitMinutes: 25,
     waitQueues: 8,
     currentQueue: 'A-15',
-    totalWaiting: 8,
     rating: 4.8,
     reviews: 342,
     isHot: true,
@@ -288,7 +294,6 @@ const RESTAURANTS_DATA = [
     waitMinutes: 15,
     waitQueues: 2,
     currentQueue: 'B-08',
-    totalWaiting: 4,
     rating: 4.7,
     reviews: 215,
     isHot: true,
@@ -318,7 +323,6 @@ const RESTAURANTS_DATA = [
     waitMinutes: 0,
     waitQueues: 0,
     currentQueue: 'C-04',
-    totalWaiting: 0,
     rating: 4.9,
     reviews: 189,
     isHot: false,
@@ -348,7 +352,6 @@ const RESTAURANTS_DATA = [
     waitMinutes: 15,
     waitQueues: 2,
     currentQueue: 'D-21',
-    totalWaiting: 3,
     rating: 4.6,
     reviews: 410,
     isHot: true,
@@ -368,6 +371,21 @@ const RESTAURANTS_DATA = [
     ]
   }
 ];
+
+type Restaurant = (typeof RESTAURANTS_DATA)[number];
+
+interface QueueTicket {
+  id: string;
+  restaurant: Restaurant;
+  queueNumber: string;
+  aheadCount: number;
+  estimatedTime: string;
+  guests: number;
+  zone: string;
+  note: string;
+  statusStep: 1 | 2 | 3;
+  bookedAt: string;
+}
 
 const BANNERS = [
   {
@@ -501,7 +519,7 @@ export default function RestaurantQueuePage() {
               />
               <div className="bg-white rounded-2xl p-3 shadow-sm border border-[#135D66]/10">
                 <h2 className="font-bold text-sm text-[#135D66]">ร้านเด็ดเลย</h2>
-                <p className="text-xs text-slate-500">Food • 1.2 กม. • รอประมาณ 15 นาที (2 คิว)</p>
+                <p className="text-xs text-slate-500">Food • 1.2 กม. • รอประมาณ 25 นาที (8 คิว)</p>
                 <button
                   type="button"
                   onClick={() => setActiveScreen('detail')}
@@ -632,7 +650,7 @@ export default function App() {
   // Selected Restaurant & Booking Form
   const [selectedRestaurant, setSelectedRestaurant] = useState(RESTAURANTS_DATA[0]);
   const [activeGalleryIdx, setActiveGalleryIdx] = useState(0);
-  const [lightboxImage, setLightboxImage] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [guestCount, setGuestCount] = useState(4);
   const [selectedZone, setSelectedZone] = useState('ด้านใน');
   const [specialRequest, setSpecialRequest] = useState('');
@@ -641,14 +659,14 @@ export default function App() {
   const [liveQueueOffset, setLiveQueueOffset] = useState(0);
 
   // Active Ticket State (เริ่มต้นมีคิว A-18 ตามภาพตัวอย่างเพื่อให้กดดูได้ทันที หรือจองใหม่ทับได้)
-  const [activeTicket, setActiveTicket] = useState({
+  const [activeTicket, setActiveTicket] = useState<QueueTicket | null>({
     id: 'T-1018',
     restaurant: RESTAURANTS_DATA[0],
     queueNumber: 'A - 18',
     aheadCount: 3,
     estimatedTime: '18:45 น.',
     guests: 4,
-    zone: 'ด้านในห้องแอร์',
+    zone: 'ด้านใน',
     note: '',
     statusStep: 2, // 1 = รับคิวแล้ว, 2 = กำลังรอ, 3 = ถึงคิวของคุณ
     bookedAt: '18:10 น.'
@@ -662,10 +680,10 @@ export default function App() {
   const [mapTargetRestaurant, setMapTargetRestaurant] = useState(RESTAURANTS_DATA[0]);
   const [showMenuModal, setShowMenuModal] = useState(false);
   const [showManageQueueModal, setShowManageQueueModal] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [claimedCoupons, setClaimedCoupons] = useState(['CPN1']);
 
-  const triggerToast = (msg) => {
+  const triggerToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
@@ -709,7 +727,7 @@ export default function App() {
   });
 
   // เปิดหน้ารายละเอียดร้าน
-  const openRestaurantDetail = (restaurant) => {
+  const openRestaurantDetail = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
     setActiveGalleryIdx(0);
     setGuestCount(4);
@@ -728,20 +746,20 @@ export default function App() {
 
     // คำนวณเวลาคาดว่าจะถึงคิว
     const now = new Date();
-    now.setMinutes(now.getMinutes() + (selectedRestaurant.waitMinutes || 15));
+    now.setMinutes(now.getMinutes() + selectedRestaurant.waitMinutes);
     const estHours = String(now.getHours()).padStart(2, '0');
     const estMins = String(now.getMinutes()).padStart(2, '0');
 
-    const newTicket = {
+    const newTicket: QueueTicket = {
       id: `T-${Date.now()}`,
       restaurant: selectedRestaurant,
       queueNumber: formattedQueue,
-      aheadCount: selectedRestaurant.waitQueues > 0 ? selectedRestaurant.waitQueues : 1,
+      aheadCount: selectedRestaurant.waitQueues,
       estimatedTime: `${estHours}:${estMins} น.`,
       guests: guestCount,
       zone: selectedZone,
       note: specialRequest,
-      statusStep: 2,
+      statusStep: selectedRestaurant.waitQueues === 0 ? 3 : 2,
       bookedAt: 'เมื่อสักครู่'
     };
 
@@ -1397,17 +1415,17 @@ export default function App() {
 
                     <div className="flex items-center justify-between">
                       <span className="text-[#1B3B1A] font-semibold">
-                        รออีก: <strong className="text-white">{selectedRestaurant.totalWaiting} คิว</strong>
+                        รออีก: <strong className="text-white">{selectedRestaurant.waitQueues} คิว</strong>
                       </span>
                       <span className="flex items-center gap-1 font-bold text-[#1B3B1A] text-[11px]">
-                        <IconUsers className="w-3.5 h-3.5" /> {selectedRestaurant.totalWaiting} คิว
+                        <IconUsers className="w-3.5 h-3.5" /> {selectedRestaurant.waitQueues} คิว
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between pt-0.5 border-t border-white/25">
                       <span className="text-[#1B3B1A] font-semibold">เวลาโดยประมาณ:</span>
                       <span className="font-extrabold text-sm text-[#135D66] bg-white/90 px-2 py-0.5 rounded-md">
-                        ~{selectedRestaurant.waitMinutes || 5} นาที
+                        {selectedRestaurant.waitMinutes === 0 ? 'ทันที' : `~${selectedRestaurant.waitMinutes} นาที`}
                       </span>
                     </div>
                   </div>
