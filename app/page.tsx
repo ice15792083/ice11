@@ -3,24 +3,24 @@
 import { useState, useEffect, type MouseEventHandler, type CSSProperties } from 'react';
 
 // ============================================================================
-// SYSTEM THEME TOKENS (ธีมระบบ: Orange + Green + Sky Blue + White)
+// SYSTEM THEME TOKENS (ธีมระบบ: Modern Orange + White)
 // ใช้ทั้ง Inline CSS Styles และ Tailwind เพื่อให้สีแสดงผลตรงตามระบบ 100%
 // ============================================================================
 const PALETTE = {
-  pageBg: '#F0F9FF',          // พื้นหลังรอบนอก (Sky)
-  appBg: '#F8FCFF',           // พื้นหลังภายในแอป
+  pageBg: '#FFF7ED',          // พื้นหลังรอบนอก (Warm White)
+  appBg: '#FFFBF7',           // พื้นหลังภายในแอป
   cardBg: '#FFFFFF',          // การ์ดเนื้อหา
   inkPrimary: '#0F172A',      // ตัวอักษรหลัก
   inkSecondary: '#475569',    // ตัวอักษรรอง
   border: '#CBD5E1',          // เส้นขอบเชิงระบบ
   primary: '#C2410C',         // สีหลักของระบบ (Orange)
-  accent: '#0284C7',          // สีรอง (Sky Blue)
+  accent: '#C2410C',          // สีเน้นและแอคชัน
   accentSoft: '#FFF7ED',      // พื้นหลังป้ายเน้น
   accentBorder: '#FDBA74',
   accentText: '#9A3412',
-  infoBg: '#F0F9FF',          // สถานะข้อมูล/คิวสด
-  infoBorder: '#BAE6FD',
-  infoText: '#075985',
+  infoBg: '#FFF7ED',          // สถานะข้อมูล/คิวสด
+  infoBorder: '#FDBA74',
+  infoText: '#9A3412',
   success: '#15803D',
   successBg: '#F0FDF4',       // สถานะยืนยัน/สำเร็จ
   successBorder: '#BBF7D0',
@@ -46,7 +46,7 @@ const btnSuccessStyle: CSSProperties = {
 };
 
 const btnSecondaryStyle: CSSProperties = {
-  backgroundColor: '#F8FCFF',
+  backgroundColor: '#FFFBF7',
   color: PALETTE.inkPrimary,
   border: `1px solid ${PALETTE.border}`,
 };
@@ -245,7 +245,7 @@ const createFallbackFoodDataUri = (label = 'เมนูอร่อย') => {
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#C2410C"/>
-        <stop offset="100%" stop-color="#0284C7"/>
+        <stop offset="100%" stop-color="#FB923C"/>
       </linearGradient>
     </defs>
     <rect width="400" height="300" fill="url(#bg)"/>
@@ -488,7 +488,7 @@ const INITIAL_HISTORY = [
 const NEXTJS_CODE_SNIPPET = `'use client';
 
 // โครงสร้างโปรเจกต์ Next.js (App Router + Tailwind CSS + Inline System Tokens)
-// ชุดสีเชิงระบบ: Orange + Green + Sky Blue + White
+// ชุดสีเชิงระบบ: Modern Orange + White with green success states
 
 import React, { useState } from 'react';
 
@@ -506,16 +506,16 @@ export default function RestaurantQueuePage() {
   });
 
   return (
-    <main style={{ backgroundColor: '#F0F9FF', color: '#0F172A' }} className="min-h-screen flex items-center justify-center p-4">
+    <main style={{ backgroundColor: '#FFF7ED', color: '#0F172A' }} className="min-h-screen flex items-center justify-center p-4">
       <div style={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1' }} className="w-full max-w-[400px] h-[820px] rounded-[36px] shadow-2xl overflow-hidden flex flex-col border-[6px]">
         <header style={{ backgroundColor: '#C2410C', color: '#FFFFFF' }} className="px-4 py-3 flex items-center justify-between">
           <span className="text-xs font-bold">สุโขทัย, ประเทศไทย</span>
-          <span style={{ backgroundColor: '#0284C7', color: '#FFFFFF' }} className="text-[11px] font-semibold px-2.5 py-1 rounded-full">
+          <span style={{ backgroundColor: '#C2410C', color: '#FFFFFF' }} className="text-[11px] font-semibold px-2.5 py-1 rounded-full">
             {activeScreen}
           </span>
         </header>
 
-        <div style={{ backgroundColor: '#F8FCFF' }} className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div style={{ backgroundColor: '#FFFBF7' }} className="flex-1 overflow-y-auto p-4 space-y-3">
           {activeScreen === 'home' && (
             <div style={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1' }} className="rounded-2xl p-3 border">
               <h2 className="font-bold text-sm">ร้านเด็ดเลย</h2>
@@ -533,14 +533,14 @@ export default function RestaurantQueuePage() {
 
           {activeScreen === 'detail' && (
             <div className="space-y-3">
-              <div style={{ backgroundColor: '#F0F9FF', borderColor: '#BAE6FD', color: '#075985' }} className="border rounded-2xl p-3 text-xs">
+              <div style={{ backgroundColor: '#FFF7ED', borderColor: '#FDBA74', color: '#9A3412' }} className="border rounded-2xl p-3 text-xs">
                 คิวปัจจุบัน: A-15 | รออีก: 8 คิว | เวลาโดยประมาณ: ~25 นาที
               </div>
               <div className="flex items-center justify-between bg-white border border-slate-300 p-3 rounded-xl">
                 <span className="text-xs font-bold">จำนวนผู้ใช้บริการ: {guests} คน</span>
                 <div className="flex gap-2">
                   <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 1))} className="w-7 h-7 rounded-lg bg-slate-200 font-bold">-</button>
-                  <button type="button" onClick={() => setGuests((g) => Math.min(20, g + 1))} style={{ backgroundColor: '#0284C7', color: '#FFFFFF' }} className="w-7 h-7 rounded-lg font-bold">+</button>
+                  <button type="button" onClick={() => setGuests((g) => Math.min(20, g + 1))} style={{ backgroundColor: '#C2410C', color: '#FFFFFF' }} className="w-7 h-7 rounded-lg font-bold">+</button>
                 </div>
               </div>
               <select value={zone} onChange={(e) => setZone(e.target.value)} className="w-full bg-white border border-slate-300 text-xs font-semibold p-2.5 rounded-xl">
@@ -561,7 +561,7 @@ export default function RestaurantQueuePage() {
           {activeScreen === 'ticket' && (
             <div className="bg-white border border-slate-300 rounded-3xl p-4 text-center space-y-2">
               <p className="text-xs text-slate-500">หมายเลขคิวของคุณ</p>
-              <p style={{ color: '#0284C7' }} className="text-5xl font-black">{ticket.queueNumber}</p>
+              <p style={{ color: '#C2410C' }} className="text-5xl font-black">{ticket.queueNumber}</p>
               <p className="text-xs">เหลืออีก {ticket.aheadCount} คิว • ถึงคิวเวลา {ticket.estimatedTime}</p>
             </div>
           )}
@@ -805,7 +805,7 @@ export default function App() {
           className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition"
         >
           <IconSmartphone className="w-3.5 h-3.5" />
-          หน้าจอแอป (ส้ม + เขียว + ฟ้า)
+          หน้าจอแอป (ส้ม + ขาว)
         </button>
         <button
           type="button"
@@ -837,7 +837,7 @@ export default function App() {
             style={{ backgroundColor: '#020617', borderColor: '#1E293B' }}
             className="flex items-center justify-between px-4 py-3 border-b"
           >
-            <span style={{ color: '#7DD3FC' }} className="text-xs font-semibold">
+            <span style={{ color: '#FDBA74' }} className="text-xs font-semibold">
               src/app/page.tsx (Next.js + System Theme Tokens)
             </span>
             <button
@@ -872,7 +872,7 @@ export default function App() {
                 className="flex items-center gap-2 text-left group"
               >
                 <span
-                  style={{ backgroundColor: 'rgba(2, 132, 199, 0.2)', color: '#7DD3FC', borderColor: 'rgba(125, 211, 252, 0.35)' }}
+                  style={{ backgroundColor: 'rgba(249, 115, 22, 0.2)', color: '#FDBA74', borderColor: 'rgba(253, 186, 116, 0.35)' }}
                   className="w-8 h-8 rounded-full flex items-center justify-center border"
                 >
                   <IconMapPin className="w-4 h-4" />
@@ -1064,7 +1064,7 @@ export default function App() {
                             key={b.id}
                             type="button"
                             onClick={() => setCurrentBanner(i)}
-                            style={{ backgroundColor: currentBanner === i ? '#7DD3FC' : 'rgba(255,255,255,0.45)' }}
+                            style={{ backgroundColor: currentBanner === i ? '#FDBA74' : 'rgba(255,255,255,0.45)' }}
                             className={`h-1.5 rounded-full transition-all ${currentBanner === i ? 'w-4' : 'w-1.5'}`}
                             aria-label={`แบนเนอร์ ${i + 1}`}
                           />
@@ -1579,7 +1579,7 @@ export default function App() {
             {activeScreen === 'privileges' && (
               <div className="space-y-3">
                 <div style={{ backgroundColor: PALETTE.primary, color: '#FFFFFF' }} className="rounded-2xl p-4">
-                  <div style={{ color: '#7DD3FC' }} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider">
+                  <div style={{ color: '#FDBA74' }} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider">
                     <IconAward className="w-3.5 h-3.5" />
                     Sukhothai Queue Member
                   </div>
