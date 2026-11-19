@@ -3,26 +3,28 @@
 import { useState, useEffect, type MouseEventHandler, type CSSProperties } from 'react';
 
 // ============================================================================
-// SYSTEM THEME TOKENS (ธีมระบบ: Deep Slate Navy + Warm Amber + Semantic Colors)
+// SYSTEM THEME TOKENS (ธีมระบบ: Orange + Green + Sky Blue + White)
 // ใช้ทั้ง Inline CSS Styles และ Tailwind เพื่อให้สีแสดงผลตรงตามระบบ 100%
 // ============================================================================
 const PALETTE = {
-  pageBg: '#E2E8F0',          // พื้นหลังรอบนอก (Cool Slate)
-  appBg: '#F8FAFC',           // พื้นหลังภายในแอป
+  pageBg: '#F0F9FF',          // พื้นหลังรอบนอก (Sky)
+  appBg: '#F8FCFF',           // พื้นหลังภายในแอป
   cardBg: '#FFFFFF',          // การ์ดเนื้อหา
-  inkPrimary: '#0F172A',      // ตัวอักษรหลัก (Deep Slate Navy)
+  inkPrimary: '#0F172A',      // ตัวอักษรหลัก
   inkSecondary: '#475569',    // ตัวอักษรรอง
   border: '#CBD5E1',          // เส้นขอบเชิงระบบ
-  primary: '#0F172A',         // สีหลักของระบบ (Slate Navy)
-  accent: '#D97706',          // สีเน้นแอคชัน/เลขคิว (Warm Amber)
-  accentSoft: '#FEF3C7',      // พื้นหลังป้ายเน้น
-  accentText: '#92400E',
-  infoBg: '#EFF6FF',          // สถานะข้อมูล/คิวสด
-  infoBorder: '#BFDBFE',
-  infoText: '#1E40AF',
-  successBg: '#ECFDF5',       // สถานะยืนยัน/สำเร็จ
-  successBorder: '#A7F3D0',
-  successText: '#065F46',
+  primary: '#C2410C',         // สีหลักของระบบ (Orange)
+  accent: '#0284C7',          // สีรอง (Sky Blue)
+  accentSoft: '#FFF7ED',      // พื้นหลังป้ายเน้น
+  accentBorder: '#FDBA74',
+  accentText: '#9A3412',
+  infoBg: '#F0F9FF',          // สถานะข้อมูล/คิวสด
+  infoBorder: '#BAE6FD',
+  infoText: '#075985',
+  success: '#15803D',
+  successBg: '#F0FDF4',       // สถานะยืนยัน/สำเร็จ
+  successBorder: '#BBF7D0',
+  successText: '#166534',
   dangerBg: '#FEF2F2',        // สถานะยกเลิก/แจ้งเตือน
   dangerBorder: '#FECACA',
   dangerText: '#991B1B',
@@ -39,12 +41,12 @@ const btnAccentStyle: CSSProperties = {
 };
 
 const btnSuccessStyle: CSSProperties = {
-  backgroundColor: '#047857',
+  backgroundColor: PALETTE.success,
   color: '#FFFFFF',
 };
 
 const btnSecondaryStyle: CSSProperties = {
-  backgroundColor: '#F1F5F9',
+  backgroundColor: '#F8FCFF',
   color: PALETTE.inkPrimary,
   border: `1px solid ${PALETTE.border}`,
 };
@@ -242,13 +244,13 @@ const createFallbackFoodDataUri = (label = 'เมนูอร่อย') => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
     <defs>
       <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#0F172A"/>
-        <stop offset="100%" stop-color="#D97706"/>
+        <stop offset="0%" stop-color="#C2410C"/>
+        <stop offset="100%" stop-color="#0284C7"/>
       </linearGradient>
     </defs>
     <rect width="400" height="300" fill="url(#bg)"/>
-    <circle cx="200" cy="126" r="54" fill="#FEF3C7" opacity="0.95"/>
-    <text x="200" y="133" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold" fill="#0F172A">คิวพร้อม</text>
+    <circle cx="200" cy="126" r="54" fill="#FFF7ED" opacity="0.95"/>
+    <text x="200" y="133" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="bold" fill="#C2410C">คิวพร้อม</text>
     <text x="200" y="218" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">${safeLabel}</text>
   </svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -486,7 +488,7 @@ const INITIAL_HISTORY = [
 const NEXTJS_CODE_SNIPPET = `'use client';
 
 // โครงสร้างโปรเจกต์ Next.js (App Router + Tailwind CSS + Inline System Tokens)
-// ชุดสีเชิงระบบ: Deep Slate Navy (#0F172A) + Warm Amber (#D97706) + Semantic Status Colors
+// ชุดสีเชิงระบบ: Orange + Green + Sky Blue + White
 
 import React, { useState } from 'react';
 
@@ -504,16 +506,16 @@ export default function RestaurantQueuePage() {
   });
 
   return (
-    <main style={{ backgroundColor: '#E2E8F0', color: '#0F172A' }} className="min-h-screen flex items-center justify-center p-4">
+    <main style={{ backgroundColor: '#F0F9FF', color: '#0F172A' }} className="min-h-screen flex items-center justify-center p-4">
       <div style={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1' }} className="w-full max-w-[400px] h-[820px] rounded-[36px] shadow-2xl overflow-hidden flex flex-col border-[6px]">
-        <header style={{ backgroundColor: '#0F172A', color: '#FFFFFF' }} className="px-4 py-3 flex items-center justify-between">
+        <header style={{ backgroundColor: '#C2410C', color: '#FFFFFF' }} className="px-4 py-3 flex items-center justify-between">
           <span className="text-xs font-bold">สุโขทัย, ประเทศไทย</span>
-          <span style={{ backgroundColor: '#D97706', color: '#FFFFFF' }} className="text-[11px] font-semibold px-2.5 py-1 rounded-full">
+          <span style={{ backgroundColor: '#0284C7', color: '#FFFFFF' }} className="text-[11px] font-semibold px-2.5 py-1 rounded-full">
             {activeScreen}
           </span>
         </header>
 
-        <div style={{ backgroundColor: '#F8FAFC' }} className="flex-1 overflow-y-auto p-4 space-y-3">
+        <div style={{ backgroundColor: '#F8FCFF' }} className="flex-1 overflow-y-auto p-4 space-y-3">
           {activeScreen === 'home' && (
             <div style={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1' }} className="rounded-2xl p-3 border">
               <h2 className="font-bold text-sm">ร้านเด็ดเลย</h2>
@@ -521,7 +523,7 @@ export default function RestaurantQueuePage() {
               <button
                 type="button"
                 onClick={() => setActiveScreen('detail')}
-                style={{ backgroundColor: '#0F172A', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#C2410C', color: '#FFFFFF' }}
                 className="mt-2 text-xs font-semibold px-4 py-1.5 rounded-xl"
               >
                 จองคิวทันที
@@ -531,14 +533,14 @@ export default function RestaurantQueuePage() {
 
           {activeScreen === 'detail' && (
             <div className="space-y-3">
-              <div style={{ backgroundColor: '#EFF6FF', borderColor: '#BFDBFE', color: '#1E40AF' }} className="border rounded-2xl p-3 text-xs">
+              <div style={{ backgroundColor: '#F0F9FF', borderColor: '#BAE6FD', color: '#075985' }} className="border rounded-2xl p-3 text-xs">
                 คิวปัจจุบัน: A-15 | รออีก: 8 คิว | เวลาโดยประมาณ: ~25 นาที
               </div>
               <div className="flex items-center justify-between bg-white border border-slate-300 p-3 rounded-xl">
                 <span className="text-xs font-bold">จำนวนผู้ใช้บริการ: {guests} คน</span>
                 <div className="flex gap-2">
                   <button type="button" onClick={() => setGuests((g) => Math.max(1, g - 1))} className="w-7 h-7 rounded-lg bg-slate-200 font-bold">-</button>
-                  <button type="button" onClick={() => setGuests((g) => Math.min(20, g + 1))} style={{ backgroundColor: '#D97706', color: '#FFFFFF' }} className="w-7 h-7 rounded-lg font-bold">+</button>
+                  <button type="button" onClick={() => setGuests((g) => Math.min(20, g + 1))} style={{ backgroundColor: '#0284C7', color: '#FFFFFF' }} className="w-7 h-7 rounded-lg font-bold">+</button>
                 </div>
               </div>
               <select value={zone} onChange={(e) => setZone(e.target.value)} className="w-full bg-white border border-slate-300 text-xs font-semibold p-2.5 rounded-xl">
@@ -548,7 +550,7 @@ export default function RestaurantQueuePage() {
               <button
                 type="button"
                 onClick={() => setActiveScreen('ticket')}
-                style={{ backgroundColor: '#047857', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#15803D', color: '#FFFFFF' }}
                 className="w-full py-2.5 rounded-xl font-bold text-xs"
               >
                 ยืนยันขอรับคิว
@@ -559,7 +561,7 @@ export default function RestaurantQueuePage() {
           {activeScreen === 'ticket' && (
             <div className="bg-white border border-slate-300 rounded-3xl p-4 text-center space-y-2">
               <p className="text-xs text-slate-500">หมายเลขคิวของคุณ</p>
-              <p style={{ color: '#D97706' }} className="text-5xl font-black">{ticket.queueNumber}</p>
+              <p style={{ color: '#0284C7' }} className="text-5xl font-black">{ticket.queueNumber}</p>
               <p className="text-xs">เหลืออีก {ticket.aheadCount} คิว • ถึงคิวเวลา {ticket.estimatedTime}</p>
             </div>
           )}
@@ -803,7 +805,7 @@ export default function App() {
           className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition"
         >
           <IconSmartphone className="w-3.5 h-3.5" />
-          หน้าจอแอป (Slate Navy + Amber)
+          หน้าจอแอป (ส้ม + เขียว + ฟ้า)
         </button>
         <button
           type="button"
@@ -835,7 +837,7 @@ export default function App() {
             style={{ backgroundColor: '#020617', borderColor: '#1E293B' }}
             className="flex items-center justify-between px-4 py-3 border-b"
           >
-            <span style={{ color: '#FBBF24' }} className="text-xs font-semibold">
+            <span style={{ color: '#7DD3FC' }} className="text-xs font-semibold">
               src/app/page.tsx (Next.js + System Theme Tokens)
             </span>
             <button
@@ -858,7 +860,7 @@ export default function App() {
           style={{ backgroundColor: PALETTE.cardBg, borderColor: '#94A3B8' }}
           className="w-full max-w-[400px] h-[810px] rounded-[36px] border-[6px] shadow-2xl overflow-hidden flex flex-col relative"
         >
-          {/* Top App Header (Deep Slate Navy Header) */}
+          {/* Top App Header (Orange Primary Header) */}
           <header
             style={{ backgroundColor: PALETTE.primary, color: '#FFFFFF' }}
             className="px-4 py-3.5 flex items-center justify-between z-20 shrink-0 shadow-sm"
@@ -870,7 +872,7 @@ export default function App() {
                 className="flex items-center gap-2 text-left group"
               >
                 <span
-                  style={{ backgroundColor: 'rgba(217, 119, 6, 0.2)', color: '#FBBF24', borderColor: 'rgba(251, 191, 36, 0.35)' }}
+                  style={{ backgroundColor: 'rgba(2, 132, 199, 0.2)', color: '#7DD3FC', borderColor: 'rgba(125, 211, 252, 0.35)' }}
                   className="w-8 h-8 rounded-full flex items-center justify-center border"
                 >
                   <IconMapPin className="w-4 h-4" />
@@ -1062,7 +1064,7 @@ export default function App() {
                             key={b.id}
                             type="button"
                             onClick={() => setCurrentBanner(i)}
-                            style={{ backgroundColor: currentBanner === i ? '#FBBF24' : 'rgba(255,255,255,0.45)' }}
+                            style={{ backgroundColor: currentBanner === i ? '#7DD3FC' : 'rgba(255,255,255,0.45)' }}
                             className={`h-1.5 rounded-full transition-all ${currentBanner === i ? 'w-4' : 'w-1.5'}`}
                             aria-label={`แบนเนอร์ ${i + 1}`}
                           />
@@ -1203,7 +1205,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setShowMenuModal(true)}
-                      style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                      style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                       className="inline-flex items-center gap-1 text-xs font-semibold border px-3 py-1.5 rounded-xl"
                     >
                       <IconBookOpen className="w-3.5 h-3.5" />
@@ -1233,7 +1235,7 @@ export default function App() {
                         <p style={{ color: PALETTE.inkSecondary }} className="text-xs mt-0.5">{selectedRestaurant.location}</p>
                       </div>
                       <span
-                        style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                        style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                         className="inline-flex items-center gap-1 text-xs font-bold border px-2 py-0.5 rounded-lg shrink-0"
                       >
                         <IconStar className="w-3.5 h-3.5" />
@@ -1356,7 +1358,7 @@ export default function App() {
                   <div style={{ backgroundColor: PALETTE.cardBg, borderColor: PALETTE.border }} className="rounded-3xl border p-5 text-center space-y-3.5">
                     <div className="flex items-center justify-between">
                       <span
-                        style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                        style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                         className="text-[11px] font-bold px-3 py-1 rounded-full border"
                       >
                         {activeTicket.restaurant.shortName}
@@ -1474,7 +1476,7 @@ export default function App() {
                ============================================================== */}
             {activeScreen === 'myQueues' && (
               <div className="space-y-3">
-                <div style={{ backgroundColor: '#E2E8F0' }} className="grid grid-cols-2 gap-1.5 p-1 rounded-2xl">
+                <div style={{ backgroundColor: PALETTE.pageBg }} className="grid grid-cols-2 gap-1.5 p-1 rounded-2xl">
                   <button
                     type="button"
                     onClick={() => setMyQueuesTab('current')}
@@ -1509,7 +1511,7 @@ export default function App() {
                     >
                       <div>
                         <span
-                          style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                          style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                           className="text-[10px] font-bold px-2 py-0.5 rounded border"
                         >
                           กำลังรอคิว
@@ -1577,7 +1579,7 @@ export default function App() {
             {activeScreen === 'privileges' && (
               <div className="space-y-3">
                 <div style={{ backgroundColor: PALETTE.primary, color: '#FFFFFF' }} className="rounded-2xl p-4">
-                  <div style={{ color: '#FBBF24' }} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider">
+                  <div style={{ color: '#7DD3FC' }} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider">
                     <IconAward className="w-3.5 h-3.5" />
                     Sukhothai Queue Member
                   </div>
@@ -1599,7 +1601,7 @@ export default function App() {
                     >
                       <div>
                         <span
-                          style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                          style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                           className="text-[10px] font-bold px-2 py-0.5 rounded border"
                         >
                           โค้ด: {cpn.code}
@@ -1754,7 +1756,7 @@ export default function App() {
                         <p style={{ color: PALETTE.inkPrimary }} className="text-xs font-bold">{m.name}</p>
                         {m.popular && (
                           <span
-                            style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: '#FCD34D' }}
+                            style={{ backgroundColor: PALETTE.accentSoft, color: PALETTE.accentText, borderColor: PALETTE.accentBorder }}
                             className="text-[9px] font-bold px-1.5 py-0.5 rounded border"
                           >
                             ขายดี
@@ -1851,7 +1853,7 @@ export default function App() {
                 </div>
 
                 <div
-                  style={{ backgroundColor: PALETTE.accentSoft, borderColor: '#FCD34D', color: PALETTE.accentText }}
+                  style={{ backgroundColor: PALETTE.accentSoft, borderColor: PALETTE.accentBorder, color: PALETTE.accentText }}
                   className="rounded-2xl border p-3 flex items-start gap-2 text-xs"
                 >
                   <IconAlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
