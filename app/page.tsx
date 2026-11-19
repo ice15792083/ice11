@@ -1,35 +1,248 @@
 import React, { useState, useEffect } from 'react';
-import {
-  MapPin,
-  Search,
-  User,
-  ChevronLeft,
-  ChevronDown,
-  Star,
-  Users,
-  Plus,
-  Minus,
-  X,
-  BookOpen,
-  Clock,
-  AlertCircle,
-  Home,
-  Tag,
-  ClipboardList,
-  CheckCircle2,
-  Code2,
-  Smartphone,
-  Copy,
-  Check,
-  Navigation,
-  Utensils,
-  Sparkles,
-  RefreshCw,
-  Bell,
-  Phone,
-  Award,
-  Heart
-} from 'lucide-react';
+
+// ============================================================================
+// SELF-CONTAINED INLINE SVG ICONS (ปลอดจากปัญหา external icon dependency)
+// ============================================================================
+const IconMapPin = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
+const IconSearch = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.3-4.3" />
+  </svg>
+);
+
+const IconUser = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+);
+
+const IconChevronLeft = ({ className = 'w-5 h-5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+);
+
+const IconChevronDown = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+);
+
+const IconStar = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+const IconUsers = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const IconPlus = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </svg>
+);
+
+const IconMinus = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14" />
+  </svg>
+);
+
+const IconX = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
+
+const IconBookOpen = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+  </svg>
+);
+
+const IconClock = ({ className = 'w-5 h-5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const IconAlertCircle = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" y1="8" x2="12" y2="12" />
+    <line x1="12" y1="16" x2="12.01" y2="16" />
+  </svg>
+);
+
+const IconHome = ({ className = 'w-5 h-5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
+
+const IconTag = ({ className = 'w-5 h-5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
+    <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" />
+  </svg>
+);
+
+const IconClipboardList = ({ className = 'w-5 h-5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <path d="M12 11h4" />
+    <path d="M12 16h4" />
+    <path d="M8 11h.01" />
+    <path d="M8 16h.01" />
+  </svg>
+);
+
+const IconCode2 = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m18 16 4-4-4-4" />
+    <path d="m6 8-4 4 4 4" />
+    <path d="m14.5 4-5 16" />
+  </svg>
+);
+
+const IconSmartphone = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+    <path d="M12 18h.01" />
+  </svg>
+);
+
+const IconCopy = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+  </svg>
+);
+
+const IconCheck = ({ className = 'w-3.5 h-3.5' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
+const IconNavigation = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+  </svg>
+);
+
+const IconUtensils = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+    <path d="M7 2v20" />
+    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+  </svg>
+);
+
+const IconSparkles = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+  </svg>
+);
+
+const IconRefreshCw = ({ className = 'w-3 h-3' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+    <path d="M21 3v5h-5" />
+    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+    <path d="M8 16H3v5" />
+  </svg>
+);
+
+const IconBell = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+  </svg>
+);
+
+const IconPhone = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const IconAward = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="8" r="6" />
+    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+  </svg>
+);
+
+const IconHeart = ({ className = 'w-4 h-4' }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+  </svg>
+);
+
+// สร้าง Data URI SVG สำรองเมื่อโหลดรูปภาพไม่ได้ (ปลอดจาก network error ตอน build/preview)
+const createFallbackFoodDataUri = (label = 'เมนูอร่อย') => {
+  const safeLabel = label.replace(/[<>&"]/g, '');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#135D66"/>
+        <stop offset="100%" stop-color="#269A8E"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="300" fill="url(#bg)"/>
+    <circle cx="200" cy="130" r="56" fill="#FFE082" opacity="0.9"/>
+    <circle cx="200" cy="130" r="42" fill="#FFF8E1"/>
+    <text x="200" y="137" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#135D66">อาหารไทย</text>
+    <text x="200" y="220" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF">${safeLabel}</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
+// คอมโพเนนต์รูปภาพพร้อม fallback อัตโนมัติและไม่ให้เกิด error บนหน้าเว็บ
+const SafeImage = ({ src, alt, className = '', onClick, fallbackLabel = 'ร้านเด็ดเลย' }) => {
+  const fallbackSrc = createFallbackFoodDataUri(fallbackLabel);
+  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+
+  useEffect(() => {
+    setImgSrc(src || fallbackSrc);
+  }, [src, fallbackSrc]);
+
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      onClick={onClick}
+      onError={() => {
+        if (imgSrc !== fallbackSrc) {
+          setImgSrc(fallbackSrc);
+        }
+      }}
+      className={className}
+    />
+  );
+};
 
 // ข้อมูลจำลองร้านอาหารในสุโขทัยและร้านดังตามภาพตัวอย่าง
 const RESTAURANTS_DATA = [
@@ -41,8 +254,8 @@ const RESTAURANTS_DATA = [
     tagType: 'Food',
     distance: '1.2 กม.',
     distanceNum: 1.2,
-    waitMinutes: 15,
-    waitQueues: 2,
+    waitMinutes: 25,
+    waitQueues: 8,
     currentQueue: 'A-15',
     totalWaiting: 8,
     rating: 4.8,
@@ -132,8 +345,8 @@ const RESTAURANTS_DATA = [
     tagType: 'Food',
     distance: '0.8 กม.',
     distanceNum: 0.8,
-    waitMinutes: 10,
-    waitQueues: 1,
+    waitMinutes: 15,
+    waitQueues: 2,
     currentQueue: 'D-21',
     totalWaiting: 3,
     rating: 4.6,
@@ -217,63 +430,179 @@ const INITIAL_HISTORY = [
   }
 ];
 
-const NEXTJS_CODE_SNIPPET = `// โครงสร้างโปรเจกต์ Next.js 14+ (App Router + Tailwind CSS)
-// 1. ติดตั้ง: npx create-next-app@latest queue-sukhothai --tailwind --eslint
-// 2. ติดตั้งไอคอน: npm install lucide-react
-// 3. นำไฟล์ page.tsx ด้านล่างไปวางที่ src/app/page.tsx
+const NEXTJS_CODE_SNIPPET = `'use client';
 
-"use client";
+// โครงสร้างโปรเจกต์ Next.js 14/15/16+ (App Router + Tailwind CSS)
+// 1. สร้างโปรเจกต์: npx create-next-app@latest queue-sukhothai --typescript --tailwind --eslint
+// 2. วางโค้ดนี้ลงที่ไฟล์ src/app/page.tsx แล้วรัน npm run build ได้ทันที (ไม่ต้องลงแพ็กเกจไอคอนเพิ่ม)
 
-import React, { useState } from "react";
-import { MapPin, Search, User, Star, Users, Plus, Minus, X, BookOpen } from "lucide-react";
+import React, { useState } from 'react';
 
-// Palette Tokens ตามดีไซน์:
-// Primary Teal: #135D66 | Secondary Mint: #00A896
-// Soft Blue BG: #E3F2FD | Action Green: #4CAF50
+type ScreenType = 'home' | 'detail' | 'ticket' | 'myQueues';
 
-export default function RestaurantQueueApp() {
-  const [activeScreen, setActiveScreen] = useState<"home" | "detail" | "ticket" | "my-queues">("home");
-  const [guests, setGuests] = useState(4);
-  const [zone, setZone] = useState("ด้านในห้องแอร์");
-  const [note, setNote] = useState("");
-  const [activeTicket, setActiveTicket] = useState({
-    queueNumber: "A - 18",
-    restaurantName: "ร้านเด็ดเลย",
+interface ActiveTicketState {
+  queueNumber: string;
+  restaurantName: string;
+  aheadCount: number;
+  estimatedTime: string;
+  guests: number;
+  zone: string;
+  statusStep: 1 | 2 | 3;
+}
+
+export default function RestaurantQueuePage() {
+  const [activeScreen, setActiveScreen] = useState<ScreenType>('home');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [guests, setGuests] = useState<number>(4);
+  const [zone, setZone] = useState<string>('ด้านใน');
+  const [specialRequest, setSpecialRequest] = useState<string>('');
+  const [ticket, setTicket] = useState<ActiveTicketState>({
+    queueNumber: 'A - 18',
+    restaurantName: 'ร้านเด็ดเลย',
     aheadCount: 3,
-    estimatedTime: "18:45 น.",
-    statusStep: 2, // 1: รับคิวแล้ว, 2: กำลังรอ, 3: ถึงคิวของคุณ
+    estimatedTime: '18:45 น.',
+    guests: 4,
+    zone: 'ด้านใน',
+    statusStep: 2,
   });
 
-  const handleConfirmBooking = () => {
-    setActiveTicket({
-      queueNumber: "A - 18",
-      restaurantName: "ร้านเด็ดเลย",
+  const handleConfirmQueue = () => {
+    setTicket({
+      queueNumber: 'A - 18',
+      restaurantName: 'ร้านเด็ดเลย',
       aheadCount: 3,
-      estimatedTime: "18:45 น.",
+      estimatedTime: '18:45 น.',
+      guests,
+      zone,
       statusStep: 2,
     });
-    setActiveScreen("ticket");
+    setActiveScreen('ticket');
   };
 
   return (
-    <main className="min-h-screen bg-[#D6E6EB] flex items-center justify-center p-4">
+    <main className="min-h-screen bg-[#D6E6EB] flex items-center justify-center p-4 text-slate-800">
       <div className="w-full max-w-[400px] h-[820px] bg-[#EBF5FA] rounded-[36px] shadow-2xl overflow-hidden flex flex-col border-[6px] border-[#135D66]/20">
-        {/* Render Views: Home, Detail, Ticket, MyQueues */}
-        <header className="bg-[#D9EEF7] px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-[#135D66] font-semibold text-sm">
-            <MapPin className="w-4 h-4 text-[#00897B]" />
-            <span>สุโขทัย, ประเทศไทย</span>
-          </div>
-          <button className="w-8 h-8 rounded-full bg-[#135D66] text-white flex items-center justify-center">
-            <User className="w-4 h-4" />
-          </button>
+        <header className="bg-[#D9EEF7] px-4 py-3 flex items-center justify-between border-b border-[#135D66]/10">
+          <span className="text-xs font-bold text-[#135D66]">สุโขทัย, ประเทศไทย</span>
+          <span className="text-[11px] font-semibold bg-[#135D66] text-white px-2.5 py-1 rounded-full">
+            {activeScreen}
+          </span>
         </header>
-        
-        <div className="flex-1 overflow-y-auto p-4">
-          {/* Dynamic Screen Content */}
-          <h1 className="text-[#135D66] font-bold text-lg">ระบบจองคิวร้านอาหารออนไลน์</h1>
-          <p className="text-xs text-slate-600 mt-1">พร้อมใช้งานบน Next.js App Router</p>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {activeScreen === 'home' && (
+            <>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ค้นหาร้านอาหาร, ประเภทอาหาร, หรือโซน..."
+                className="w-full bg-white rounded-full px-4 py-2 text-xs border border-[#135D66]/20 focus:outline-none"
+              />
+              <div className="bg-white rounded-2xl p-3 shadow-sm border border-[#135D66]/10">
+                <h2 className="font-bold text-sm text-[#135D66]">ร้านเด็ดเลย</h2>
+                <p className="text-xs text-slate-500">Food • 1.2 กม. • รอประมาณ 15 นาที (2 คิว)</p>
+                <button
+                  type="button"
+                  onClick={() => setActiveScreen('detail')}
+                  className="mt-2 bg-[#135D66] text-white text-xs font-semibold px-4 py-1.5 rounded-full"
+                >
+                  จองคิวทันที
+                </button>
+              </div>
+            </>
+          )}
+
+          {activeScreen === 'detail' && (
+            <div className="space-y-3">
+              <div className="bg-[#8BC34A] text-white rounded-2xl p-3 text-xs">
+                <p className="font-bold text-[#1B3B1A]">Live Queue Dashboard</p>
+                <p>คิวปัจจุบัน: A-15 | รออีก: 8 คิว | เวลาโดยประมาณ: ~25 นาที</p>
+              </div>
+              <div className="flex items-center justify-between bg-white p-3 rounded-xl">
+                <span className="text-xs font-bold">จำนวนผู้ใช้บริการ: {guests} คน</span>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setGuests((g) => Math.max(1, g - 1))}
+                    className="w-7 h-7 rounded bg-[#8BC34A] text-white font-bold"
+                  >
+                    -
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGuests((g) => Math.min(20, g + 1))}
+                    className="w-7 h-7 rounded bg-[#1976D2] text-white font-bold"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <select
+                value={zone}
+                onChange={(e) => setZone(e.target.value)}
+                className="w-full bg-[#8BC34A]/80 text-xs font-semibold p-2.5 rounded-xl"
+              >
+                <option value="ด้านใน">ด้านใน</option>
+                <option value="Outdoors">Outdoors</option>
+                <option value="ไม่ระบุ">ไม่ระบุ</option>
+              </select>
+              <textarea
+                rows={2}
+                value={specialRequest}
+                onChange={(e) => setSpecialRequest(e.target.value)}
+                placeholder="คำขอพิเศษ..."
+                className="w-full bg-[#DCEDC8] text-xs p-2.5 rounded-xl"
+              />
+              <button
+                type="button"
+                onClick={handleConfirmQueue}
+                className="w-full py-2.5 rounded-xl bg-[#4CAF50] text-white font-bold text-xs"
+              >
+                ยืนยันขอรับคิว
+              </button>
+            </div>
+          )}
+
+          {activeScreen === 'ticket' && (
+            <div className="bg-white rounded-3xl p-4 text-center shadow-md space-y-2">
+              <p className="text-xs text-slate-500">หมายเลขคิวของคุณ</p>
+              <p className="text-5xl font-black text-[#135D66]">{ticket.queueNumber}</p>
+              <p className="text-xs">จำนวนคิวข้างหน้า: เหลืออีก {ticket.aheadCount} คิว</p>
+              <p className="text-xs">เวลาที่คาดว่าจะถึงคิว: {ticket.estimatedTime}</p>
+              <button
+                type="button"
+                onClick={() => setActiveScreen('myQueues')}
+                className="mt-2 w-full py-2 rounded-xl bg-[#2B8A9E] text-white text-xs font-semibold"
+              >
+                ดูคิวของฉัน / ประวัติ
+              </button>
+            </div>
+          )}
+
+          {activeScreen === 'myQueues' && (
+            <div className="bg-white rounded-2xl p-3 shadow-sm flex items-center justify-between">
+              <div>
+                <p className="font-bold text-xs text-[#135D66]">{ticket.restaurantName}</p>
+                <p className="text-[11px] text-slate-500">คิวปัจจุบัน: {ticket.queueNumber}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveScreen('ticket')}
+                className="bg-[#135D66] text-white text-[11px] px-3 py-1 rounded-full"
+              >
+                ดูบัตรคิวเต็ม
+              </button>
+            </div>
+          )}
         </div>
+
+        <nav className="bg-white border-t border-slate-200 grid grid-cols-4 py-2 text-[10px] font-semibold text-[#135D66]">
+          <button type="button" onClick={() => setActiveScreen('home')}>หน้าแรก</button>
+          <button type="button" onClick={() => setActiveScreen('detail')}>จองคิว</button>
+          <button type="button" onClick={() => setActiveScreen('myQueues')}>คิวของฉัน</button>
+          <button type="button" onClick={() => setActiveScreen('ticket')}>บัตรคิว</button>
+        </nav>
       </div>
     </main>
   );
@@ -305,7 +634,7 @@ export default function App() {
   const [activeGalleryIdx, setActiveGalleryIdx] = useState(0);
   const [lightboxImage, setLightboxImage] = useState(null);
   const [guestCount, setGuestCount] = useState(4);
-  const [selectedZone, setSelectedZone] = useState('ด้านในห้องแอร์');
+  const [selectedZone, setSelectedZone] = useState('ด้านใน');
   const [specialRequest, setSpecialRequest] = useState('');
 
   // Live Dashboard Simulation
@@ -384,7 +713,7 @@ export default function App() {
     setSelectedRestaurant(restaurant);
     setActiveGalleryIdx(0);
     setGuestCount(4);
-    setSelectedZone('ด้านในห้องแอร์');
+    setSelectedZone('ด้านใน');
     setSpecialRequest('');
     setActiveScreen('detail');
   };
@@ -512,7 +841,7 @@ export default function App() {
       <div className="w-full max-w-[430px] md:max-w-4xl flex flex-wrap items-center justify-between gap-2 mb-3 px-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-[#135D66] text-white flex items-center justify-center shadow-md">
-            <Utensils className="w-4 h-4" />
+            <IconUtensils className="w-4 h-4" />
           </div>
           <div>
             <h1 className="text-sm sm:text-base font-bold text-[#135D66] leading-tight">
@@ -554,7 +883,7 @@ export default function App() {
                       aheadCount: 3,
                       estimatedTime: '18:45 น.',
                       guests: 4,
-                      zone: 'ด้านในห้องแอร์',
+                      zone: 'ด้านใน',
                       note: '',
                       statusStep: 2,
                       bookedAt: '18:10 น.'
@@ -585,12 +914,12 @@ export default function App() {
           >
             {viewMode === 'prototype' ? (
               <>
-                <Code2 className="w-3.5 h-3.5" />
+                <IconCode2 className="w-3.5 h-3.5" />
                 <span>โค้ด Next.js</span>
               </>
             ) : (
               <>
-                <Smartphone className="w-3.5 h-3.5" />
+                <IconSmartphone className="w-3.5 h-3.5" />
                 <span>กลับสู่หน้าจอมือถือ</span>
               </>
             )}
@@ -614,7 +943,7 @@ export default function App() {
               onClick={handleCopyCode}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#4CAF50] hover:bg-[#43a047] text-white text-xs font-semibold transition"
             >
-              {copiedCode ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedCode ? <IconCheck className="w-3.5 h-3.5" /> : <IconCopy className="w-3.5 h-3.5" />}
               <span>{copiedCode ? 'คัดลอกโค้ดแล้ว' : 'คัดลอกโค้ด'}</span>
             </button>
           </div>
@@ -642,7 +971,7 @@ export default function App() {
           {/* Toast Notification Banner */}
           {toastMessage && (
             <div className="absolute top-12 left-4 right-4 z-50 bg-[#135D66] text-white px-3.5 py-2.5 rounded-2xl shadow-lg flex items-center gap-2 text-xs font-medium animate-bounce">
-              <Bell className="w-4 h-4 text-[#8BC34A] shrink-0" />
+              <IconBell className="w-4 h-4 text-[#8BC34A] shrink-0" />
               <span>{toastMessage}</span>
             </div>
           )}
@@ -659,9 +988,9 @@ export default function App() {
                     onClick={() => setShowLocationPicker(!showLocationPicker)}
                     className="flex items-center gap-1.5 text-[#135D66] font-bold text-sm hover:opacity-80 transition py-1"
                   >
-                    <MapPin className="w-4 h-4 text-[#00897B] fill-[#00897B]/20" />
+                    <IconMapPin className="w-4 h-4 text-[#00897B]" />
                     <span>{selectedProvince}</span>
-                    <ChevronDown className="w-4 h-4 text-[#135D66]" />
+                    <IconChevronDown className="w-4 h-4 text-[#135D66]" />
                   </button>
 
                   {/* Location Dropdown */}
@@ -686,7 +1015,7 @@ export default function App() {
                           }`}
                         >
                           <span>{loc}</span>
-                          {selectedProvince === loc && <Check className="w-3.5 h-3.5 text-[#4CAF50]" />}
+                          {selectedProvince === loc && <IconCheck className="w-3.5 h-3.5 text-[#4CAF50]" />}
                         </button>
                       ))}
                     </div>
@@ -699,14 +1028,14 @@ export default function App() {
                   className="w-8 h-8 rounded-full bg-[#135D66] text-white flex items-center justify-center shadow-sm hover:scale-105 transition"
                   title="โปรไฟล์ของฉัน"
                 >
-                  <User className="w-4 h-4" />
+                  <IconUser className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Search Bar */}
               <div className="px-4 pb-2.5 shrink-0">
                 <div className="relative flex items-center bg-white rounded-full shadow-sm border border-[#135D66]/15 px-3.5 py-2">
-                  <Search className="w-4 h-4 text-[#135D66]/60 mr-2 shrink-0" />
+                  <IconSearch className="w-4 h-4 text-[#135D66]/60 mr-2 shrink-0" />
                   <input
                     type="text"
                     value={searchQuery}
@@ -716,7 +1045,7 @@ export default function App() {
                   />
                   {searchQuery && (
                     <button onClick={() => setSearchQuery('')} className="text-slate-400 hover:text-slate-600">
-                      <X className="w-3.5 h-3.5" />
+                      <IconX className="w-3.5 h-3.5" />
                     </button>
                   )}
                 </div>
@@ -763,7 +1092,7 @@ export default function App() {
                   }`}
                 >
                   <span>{selectedCategory === 'ทั้งหมด' ? 'ประเภทอาหาร' : selectedCategory}</span>
-                  <ChevronDown className="w-3 h-3" />
+                  <IconChevronDown className="w-3 h-3" />
                 </button>
               </div>
 
@@ -801,9 +1130,10 @@ export default function App() {
                     }}
                     className="relative h-28 rounded-2xl overflow-hidden shadow-md cursor-pointer group"
                   >
-                    <img
+                    <SafeImage
                       src={BANNERS[currentBanner].image}
                       alt={BANNERS[currentBanner].title}
+                      fallbackLabel="ร้านเด็ดคิวขาวที่ไม่ควรพลาด"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent flex flex-col justify-end p-3">
@@ -884,9 +1214,10 @@ export default function App() {
                           onClick={() => openRestaurantDetail(restaurant)}
                           className="w-24 h-24 rounded-xl overflow-hidden shrink-0 cursor-pointer relative"
                         >
-                          <img
+                          <SafeImage
                             src={restaurant.foodImage}
                             alt={restaurant.name}
+                            fallbackLabel={restaurant.shortName}
                             className="w-full h-full object-cover hover:scale-105 transition"
                           />
                           {restaurant.isHot && (
@@ -907,14 +1238,14 @@ export default function App() {
                                 {restaurant.name}
                               </h3>
                               <span className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500 shrink-0">
-                                <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                                <IconStar className="w-3 h-3 text-amber-400" />
                                 {restaurant.rating}
                               </span>
                             </div>
                             <p className="text-[11px] text-slate-500 truncate">{restaurant.category}</p>
 
                             <div className="flex items-center gap-1 text-[11px] text-slate-600 mt-0.5">
-                              <MapPin className="w-3 h-3 text-[#135D66] shrink-0" />
+                              <IconMapPin className="w-3 h-3 text-[#135D66] shrink-0" />
                               <span>{restaurant.distance}</span>
                             </div>
 
@@ -961,9 +1292,10 @@ export default function App() {
             <div className="flex-1 flex flex-col overflow-hidden bg-[#F2F8FB]">
               {/* Top Hero Header with Restaurant Banner */}
               <div className="relative h-40 shrink-0">
-                <img
+                <SafeImage
                   src={selectedRestaurant.gallery[activeGalleryIdx] || selectedRestaurant.heroImage}
                   alt={selectedRestaurant.name}
+                  fallbackLabel={selectedRestaurant.shortName}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/65" />
@@ -974,13 +1306,13 @@ export default function App() {
                     onClick={() => setActiveScreen('home')}
                     className="w-8 h-8 rounded-full bg-white/90 text-[#135D66] flex items-center justify-center shadow-md hover:bg-white transition"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <IconChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => setActiveScreen('profile')}
                     className="w-8 h-8 rounded-full bg-[#135D66]/90 text-white flex items-center justify-center shadow-md"
                   >
-                    <User className="w-4 h-4" />
+                    <IconUser className="w-4 h-4" />
                   </button>
                 </div>
 
@@ -1008,7 +1340,12 @@ export default function App() {
                         activeGalleryIdx === idx ? 'border-[#135D66] shadow-sm' : 'border-transparent opacity-85 hover:opacity-100'
                       }`}
                     >
-                      <img src={imgUrl} alt={`รูปภาพที่ ${idx + 1}`} className="w-full h-full object-cover" />
+                      <SafeImage
+                        src={imgUrl}
+                        alt={`รูปภาพที่ ${idx + 1}`}
+                        fallbackLabel={selectedRestaurant.shortName}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   ))}
                 </div>
@@ -1019,7 +1356,7 @@ export default function App() {
                     <h3 className="font-bold text-base text-[#135D66] leading-tight">{selectedRestaurant.name}</h3>
                     <div className="flex items-center gap-1 mt-1">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <IconStar key={star} className="w-3.5 h-3.5 text-amber-400" />
                       ))}
                       <span className="text-xs font-bold text-slate-700 ml-1">{selectedRestaurant.rating}/5</span>
                       <span className="text-[11px] text-slate-400">({selectedRestaurant.reviews} รีวิว)</span>
@@ -1033,7 +1370,7 @@ export default function App() {
                     }}
                     className="flex items-center gap-1 bg-[#D6ECF5] hover:bg-[#BFE2F2] text-[#135D66] text-xs font-semibold px-3 py-1.5 rounded-full transition shrink-0"
                   >
-                    <MapPin className="w-3.5 h-3.5 text-[#00897B]" />
+                    <IconMapPin className="w-3.5 h-3.5 text-[#00897B]" />
                     <span>แผนที่</span>
                   </button>
                 </div>
@@ -1054,7 +1391,7 @@ export default function App() {
                         คิวปัจจุบัน: <strong className="text-white text-sm">{getLiveCurrentQueue()}</strong>
                       </span>
                       <span className="flex items-center gap-1 font-bold text-[#135D66] bg-white/85 px-2 py-0.5 rounded-md text-[11px]">
-                        <Users className="w-3 h-3" /> {getLiveCurrentQueue()}
+                        <IconUsers className="w-3 h-3" /> {getLiveCurrentQueue()}
                       </span>
                     </div>
 
@@ -1063,7 +1400,7 @@ export default function App() {
                         รออีก: <strong className="text-white">{selectedRestaurant.totalWaiting} คิว</strong>
                       </span>
                       <span className="flex items-center gap-1 font-bold text-[#1B3B1A] text-[11px]">
-                        <Users className="w-3.5 h-3.5" /> {selectedRestaurant.totalWaiting} คิว
+                        <IconUsers className="w-3.5 h-3.5" /> {selectedRestaurant.totalWaiting} คิว
                       </span>
                     </div>
 
@@ -1086,14 +1423,14 @@ export default function App() {
                         onClick={() => setGuestCount(Math.max(1, guestCount - 1))}
                         className="w-7 h-7 rounded-lg bg-[#8BC34A] hover:bg-[#7CB342] text-white flex items-center justify-center font-bold transition active:scale-90"
                       >
-                        <Minus className="w-4 h-4" />
+                        <IconMinus className="w-4 h-4" />
                       </button>
                       <span className="text-sm font-extrabold text-[#135D66] w-11 text-center">{guestCount} คน</span>
                       <button
                         onClick={() => setGuestCount(Math.min(20, guestCount + 1))}
                         className="w-7 h-7 rounded-lg bg-[#1976D2] hover:bg-[#1565C0] text-white flex items-center justify-center font-bold transition active:scale-90"
                       >
-                        <Plus className="w-4 h-4" />
+                        <IconPlus className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
@@ -1107,11 +1444,11 @@ export default function App() {
                         onChange={(e) => setSelectedZone(e.target.value)}
                         className="w-full appearance-none bg-[#8BC34A]/85 text-[#1B3B1A] font-semibold text-xs px-3.5 py-2.5 rounded-xl border border-[#7CB342] focus:outline-none cursor-pointer"
                       >
-                        <option value="ด้านในห้องแอร์">ด้านในห้องแอร์</option>
-                        <option value="Outdoors (บรรยากาศด้านนอก)">Outdoors (บรรยากาศด้านนอก)</option>
-                        <option value="ไม่ระบุโซน (รับคิวที่เร็วที่สุด)">ไม่ระบุโซน (รับคิวที่เร็วที่สุด)</option>
+                        <option value="ด้านใน">ด้านใน</option>
+                        <option value="Outdoors">Outdoors</option>
+                        <option value="ไม่ระบุ">ไม่ระบุ</option>
                       </select>
-                      <ChevronDown className="w-4 h-4 text-[#1B3B1A] absolute right-3 top-2.5 pointer-events-none" />
+                      <IconChevronDown className="w-4 h-4 text-[#1B3B1A] absolute right-3 top-2.5 pointer-events-none" />
                     </div>
                   </div>
 
@@ -1153,7 +1490,7 @@ export default function App() {
                   className="w-7 h-7 rounded-full bg-white/80 hover:bg-white text-slate-600 flex items-center justify-center shadow-2xs transition"
                   title="ปิดหน้าต่าง"
                 >
-                  <X className="w-4 h-4" />
+                  <IconX className="w-4 h-4" />
                 </button>
               </div>
 
@@ -1212,7 +1549,7 @@ export default function App() {
                       {/* Step 1: รับคิวแล้ว */}
                       <div className="relative z-10 flex flex-col items-center">
                         <div className="w-5 h-5 rounded-full bg-[#26A69A] border-2 border-white shadow flex items-center justify-center">
-                          <Check className="w-3 h-3 text-white" />
+                          <IconCheck className="w-3 h-3 text-white" />
                         </div>
                         <span className="text-[10px] font-semibold text-slate-600 mt-1.5">รับคิวแล้ว</span>
                       </div>
@@ -1244,7 +1581,7 @@ export default function App() {
                               : 'bg-slate-200'
                           }`}
                         >
-                          {activeTicket.statusStep === 3 && <Check className="w-3 h-3 text-white" />}
+                          {activeTicket.statusStep === 3 && <IconCheck className="w-3 h-3 text-white" />}
                         </div>
                         <span
                           className={`text-[10px] font-bold mt-1.5 ${
@@ -1257,13 +1594,13 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Interactive Demo Button: จำลองคิวเดิน */}
+                  {/* Interactive Demo Button: จำลองคิวถัดไป */}
                   <button
                     onClick={handleSimulateQueueProgress}
                     className="mt-2 inline-flex items-center gap-1 text-[10px] bg-slate-100 hover:bg-slate-200 text-[#135D66] font-semibold px-2.5 py-1 rounded-full transition"
                   >
-                    <RefreshCw className="w-3 h-3" />
-                    <span>จำลองคิวถัดไป (ทดสอบสถานะ)</span>
+                    <IconRefreshCw className="w-3 h-3" />
+                    <span>จำลองคิวถัดไป</span>
                   </button>
 
                   {/* 3 Action Buttons ตามภาพตัวอย่าง */}
@@ -1275,7 +1612,7 @@ export default function App() {
                       }}
                       className="w-full py-2.5 rounded-xl bg-[#2B8A9E] hover:bg-[#227283] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition"
                     >
-                      <MapPin className="w-4 h-4" />
+                      <IconMapPin className="w-4 h-4" />
                       <span>ดูตำแหน่งร้าน</span>
                     </button>
 
@@ -1283,7 +1620,7 @@ export default function App() {
                       onClick={() => setShowMenuModal(true)}
                       className="w-full py-2.5 rounded-xl bg-[#8BC34A] hover:bg-[#7CB342] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition"
                     >
-                      <BookOpen className="w-4 h-4" />
+                      <IconBookOpen className="w-4 h-4" />
                       <span>ดูเมนูอาหารล่วงหน้า</span>
                     </button>
 
@@ -1299,7 +1636,7 @@ export default function App() {
 
               {/* Bottom Notification Bar */}
               <div className="bg-[#78909C]/90 text-white rounded-full py-2 px-3.5 flex items-center justify-center gap-1.5 text-[11px] font-medium shadow-xs">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                <IconAlertCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>*ระบบจะแจ้งเตือนเมื่อเหลืออีก 2 คิว</span>
               </div>
             </div>
@@ -1349,9 +1686,10 @@ export default function App() {
                         </div>
                         <div className="p-3 flex items-center justify-between gap-2.5">
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <img
+                            <SafeImage
                               src={activeTicket.restaurant.heroImage}
                               alt={activeTicket.restaurant.name}
+                              fallbackLabel={activeTicket.restaurant.shortName}
                               className="w-16 h-16 rounded-xl object-cover shrink-0"
                             />
                             <div className="min-w-0">
@@ -1360,7 +1698,7 @@ export default function App() {
                               </h3>
                               <p className="text-[10px] text-slate-500">{activeTicket.restaurant.tagType}</p>
                               <p className="text-[10px] text-slate-600 flex items-center gap-0.5 mt-0.5">
-                                <MapPin className="w-3 h-3 text-[#135D66]" /> {activeTicket.restaurant.distance}
+                                <IconMapPin className="w-3 h-3 text-[#135D66]" /> {activeTicket.restaurant.distance}
                               </p>
                             </div>
                           </div>
@@ -1380,7 +1718,7 @@ export default function App() {
                       </div>
                     ) : (
                       <div className="bg-white rounded-2xl p-6 text-center border border-slate-100 shadow-2xs">
-                        <ClipboardList className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                        <IconClipboardList className="w-8 h-8 text-slate-300 mx-auto mb-2" />
                         <p className="text-xs font-semibold text-slate-600">ไม่มีคิวที่กำลังรอในขณะนี้</p>
                         <button
                           onClick={() => setActiveScreen('home')}
@@ -1402,9 +1740,10 @@ export default function App() {
                         key={hist.id}
                         className="bg-white rounded-2xl p-2.5 shadow-2xs border border-slate-100 flex items-center gap-3"
                       >
-                        <img
+                        <SafeImage
                           src={hist.image}
                           alt={hist.restaurantName}
+                          fallbackLabel={hist.restaurantName}
                           className="w-16 h-16 rounded-xl object-cover shrink-0 grayscale-[20%]"
                         />
                         <div className="flex-1 min-w-0">
@@ -1412,7 +1751,7 @@ export default function App() {
                           <p className="text-[10px] text-slate-500 mt-0.5">• {hist.date}</p>
                           <div className="flex items-center justify-between mt-1">
                             <span className="text-[10px] text-slate-600 flex items-center gap-1">
-                              <Users className="w-3 h-3 text-slate-400" /> {hist.guests} คน
+                              <IconUsers className="w-3 h-3 text-slate-400" /> {hist.guests} คน
                             </span>
                             <span
                               className={`text-[10px] font-bold ${
@@ -1450,7 +1789,7 @@ export default function App() {
             <div className="flex-1 flex flex-col overflow-hidden bg-[#F2F8FB]">
               <div className="bg-[#135D66] text-white p-4 shrink-0">
                 <h2 className="font-bold text-base flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <IconSparkles className="w-4 h-4 text-amber-300" />
                   <span>สิทธิพิเศษ & คูปองส่วนลด</span>
                 </h2>
                 <p className="text-[11px] text-white/80 mt-0.5">ใช้คู่กับการจองคิวร้านอาหารในจังหวัดสุโขทัย</p>
@@ -1525,7 +1864,7 @@ export default function App() {
             <div className="flex-1 flex flex-col overflow-hidden bg-[#F2F8FB]">
               <div className="bg-gradient-to-br from-[#135D66] to-[#1D7E8A] text-white p-5 shrink-0 text-center">
                 <div className="w-16 h-16 rounded-full bg-white/20 border-2 border-white mx-auto flex items-center justify-center mb-2">
-                  <User className="w-8 h-8 text-white" />
+                  <IconUser className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="font-bold text-base">คุณสุโขทัย ใจดี</h2>
                 <p className="text-xs text-white/80">089-xxx-4567 • สมาชิกระดับ Gold</p>
@@ -1548,28 +1887,31 @@ export default function App() {
 
               <div className="flex-1 overflow-y-auto p-4 space-y-2.5 text-xs">
                 {[
-                  { icon: Heart, label: 'ร้านอาหารโปรดของฉัน', sub: '3 ร้านที่บันทึกไว้' },
-                  { icon: Bell, label: 'การตั้งค่าแจ้งเตือนคิว', sub: 'แจ้งเตือนล่วงหน้า 2 คิว (เปิดอยู่)' },
-                  { icon: Award, label: 'สิทธิประโยชน์สมาชิก Gold', sub: 'รับส่วนลดพิเศษทุกวันศุกร์' },
-                  { icon: Phone, label: 'ศูนย์ช่วยเหลือ & ติดต่อเรา', sub: 'สอบถามปัญหาการใช้งาน' }
-                ].map((menu, i) => (
-                  <div
-                    key={i}
-                    onClick={() => triggerToast(`เปิดเมนู: ${menu.label}`)}
-                    className="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-2xs flex items-center justify-between cursor-pointer hover:bg-[#E3F2FD]/40 transition"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-[#E3F2FD] text-[#135D66] flex items-center justify-center">
-                        <menu.icon className="w-4 h-4" />
+                  { IconComp: IconHeart, label: 'ร้านอาหารโปรดของฉัน', sub: '3 ร้านที่บันทึกไว้' },
+                  { IconComp: IconBell, label: 'การตั้งค่าแจ้งเตือนคิว', sub: 'แจ้งเตือนล่วงหน้า 2 คิว (เปิดอยู่)' },
+                  { IconComp: IconAward, label: 'สิทธิประโยชน์สมาชิก Gold', sub: 'รับส่วนลดพิเศษทุกวันศุกร์' },
+                  { IconComp: IconPhone, label: 'ศูนย์ช่วยเหลือ & ติดต่อเรา', sub: 'สอบถามปัญหาการใช้งาน' }
+                ].map((menu, i) => {
+                  const MenuIcon = menu.IconComp;
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => triggerToast(`เปิดเมนู: ${menu.label}`)}
+                      className="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-2xs flex items-center justify-between cursor-pointer hover:bg-[#E3F2FD]/40 transition"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-xl bg-[#E3F2FD] text-[#135D66] flex items-center justify-center">
+                          <MenuIcon className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-800">{menu.label}</p>
+                          <p className="text-[10px] text-slate-500">{menu.sub}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-bold text-slate-800">{menu.label}</p>
-                        <p className="text-[10px] text-slate-500">{menu.sub}</p>
-                      </div>
+                      <IconChevronLeft className="w-4 h-4 text-slate-400 rotate-180" />
                     </div>
-                    <ChevronLeft className="w-4 h-4 text-slate-400 rotate-180" />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -1586,7 +1928,7 @@ export default function App() {
                   : 'text-slate-400 hover:text-slate-600'
               }`}
             >
-              <Home className="w-5 h-5" />
+              <IconHome className="w-5 h-5" />
               <span className="text-[10px]">หน้าแรก</span>
             </button>
 
@@ -1596,7 +1938,7 @@ export default function App() {
                 activeScreen === 'privileges' ? 'text-[#135D66] font-bold' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
-              <Tag className="w-5 h-5" />
+              <IconTag className="w-5 h-5" />
               <span className="text-[10px]">สิทธิพิเศษ</span>
             </button>
 
@@ -1611,7 +1953,7 @@ export default function App() {
               {activeTicket && (
                 <span className="absolute top-0.5 right-5 w-2 h-2 rounded-full bg-[#4CAF50] ring-2 ring-white" />
               )}
-              <ClipboardList className="w-5 h-5" />
+              <IconClipboardList className="w-5 h-5" />
               <span className="text-[10px]">คิวของฉัน</span>
             </button>
 
@@ -1621,7 +1963,7 @@ export default function App() {
                 activeScreen === 'profile' ? 'text-[#135D66] font-bold' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
-              <User className="w-5 h-5" />
+              <IconUser className="w-5 h-5" />
               <span className="text-[10px]">โปรไฟล์</span>
             </button>
           </nav>
@@ -1636,11 +1978,11 @@ export default function App() {
               <div className="bg-white w-full rounded-3xl overflow-hidden shadow-2xl animate-fade-in">
                 <div className="bg-[#135D66] text-white px-4 py-3 flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-bold">
-                    <Navigation className="w-4 h-4 text-[#8BC34A]" />
+                    <IconNavigation className="w-4 h-4 text-[#8BC34A]" />
                     <span>ตำแหน่งร้านอาหาร</span>
                   </div>
                   <button onClick={() => setShowMapModal(false)} className="text-white/80 hover:text-white">
-                    <X className="w-4 h-4" />
+                    <IconX className="w-4 h-4" />
                   </button>
                 </div>
 
@@ -1656,7 +1998,7 @@ export default function App() {
                     <div className="bg-[#135D66] text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md mb-1">
                       {mapTargetRestaurant.shortName} ({mapTargetRestaurant.distance})
                     </div>
-                    <MapPin className="w-8 h-8 text-rose-500 fill-rose-500/20" />
+                    <IconMapPin className="w-8 h-8 text-rose-500" />
                   </div>
                 </div>
 
@@ -1698,7 +2040,7 @@ export default function App() {
                     onClick={() => setShowMenuModal(false)}
                     className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center"
                   >
-                    <X className="w-4 h-4" />
+                    <IconX className="w-4 h-4" />
                   </button>
                 </div>
 
@@ -1744,7 +2086,7 @@ export default function App() {
             <div className="absolute inset-0 bg-black/55 backdrop-blur-xs z-50 flex items-center justify-center p-4">
               <div className="bg-white w-full rounded-3xl p-5 shadow-2xl space-y-3 text-center">
                 <div className="w-12 h-12 rounded-full bg-[#E3F2FD] text-[#135D66] flex items-center justify-center mx-auto">
-                  <Clock className="w-6 h-6" />
+                  <IconClock className="w-6 h-6" />
                 </div>
                 <h4 className="font-bold text-base text-[#135D66]">จัดการคิว {activeTicket.queueNumber}</h4>
                 <p className="text-xs text-slate-600">
@@ -1781,9 +2123,14 @@ export default function App() {
               onClick={() => setLightboxImage(null)}
               className="absolute inset-0 bg-black/85 z-50 flex items-center justify-center p-4 cursor-pointer"
             >
-              <img src={lightboxImage} alt="ขยายรูปภาพ" className="max-w-full max-h-[70%] rounded-2xl shadow-2xl" />
+              <SafeImage
+                src={lightboxImage}
+                alt="ขยายรูปภาพ"
+                fallbackLabel={selectedRestaurant.shortName}
+                className="max-w-full max-h-[70%] rounded-2xl shadow-2xl"
+              />
               <button className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center">
-                <X className="w-5 h-5" />
+                <IconX className="w-5 h-5" />
               </button>
             </div>
           )}
